@@ -1,8 +1,10 @@
 package ir.mosi.phonebook.model.entity.domain;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -13,19 +15,24 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @Column(name = "person_id", unique = true)
     private Long personId;
     // شناسه شخص
 
-    @Column(name = "first_name")
+    @NotNull
+    @Column(name = "first_name", nullable = false)
     private String firstName;
     //نام
 
-    @Column(name = "last_name")
+    @NotNull
+    @Column(name = "last_name", nullable = false)
     private String lastName;
     // نام خانوادگی
 
-    @Column(name = "phone_number")
+    @NotNull
+    @Size(min = 11, max = 11, message = "mobile number must be 11 digit")
+    @Column(name = "mobile_number", nullable = false)
     private String mobileNumber;
     // شماره همراه
 
