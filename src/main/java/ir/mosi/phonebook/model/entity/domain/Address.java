@@ -29,4 +29,12 @@ public class Address {
     @JoinColumn(name = "person_id")
     private Person person;
     // شخص
+
+
+    public Address(Long id, Long addressId, String description) {
+        this.id = id;
+        this.addressId = addressId;
+        this.description = description;
+    }
+
 }
