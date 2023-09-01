@@ -22,8 +22,19 @@ public class PersonServiceImpl implements PersonService {
         return personRepository.findAll();
     }
 
+    public Person findById(Long id) {
+        return personRepository.findById(id);
+    }
+
     public void save(Person person) {
         personRepository.save(person);
     }
 
+    public Person update(Person person) {
+        return personRepository.update(person);
+    }
+
+    public void delete(Long id) {
+        personRepository.delete(id);
+    }
 }

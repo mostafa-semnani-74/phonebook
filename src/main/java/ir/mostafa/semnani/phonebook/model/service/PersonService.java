@@ -7,5 +7,11 @@ import java.util.List;
 public interface PersonService {
     List<Person> findAll();
 
+    Person findById(Long id);
+
     void save(Person person);
+
+    Person update(Person person);
+
+    void delete(Long id);
 }
