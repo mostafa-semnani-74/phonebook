@@ -1,17 +1,17 @@
 package ir.mostafa.semnani.phonebook.model.service;
 
-import ir.mostafa.semnani.phonebook.model.entity.Person;
+import ir.mostafa.semnani.phonebook.model.dto.PersonDTO;
 
 import java.util.List;
 
 public interface PersonService {
-    List<Person> findAll();
+    List<PersonDTO> findAll();
 
-    Person findById(Long id);
+    PersonDTO findById(Long id);
 
-    void save(Person person);
+    void save(PersonDTO personDTO);
 
-    Person update(Person person);
+    PersonDTO update(PersonDTO personDTO);
 
     void delete(Long id);
 }

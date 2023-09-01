@@ -1,6 +1,6 @@
 package ir.mostafa.semnani.phonebook.controller;
 
-import ir.mostafa.semnani.phonebook.model.entity.Person;
+import ir.mostafa.semnani.phonebook.model.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.model.service.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +18,25 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping
-    public ResponseEntity<List<Person>> findAll() {
-        List<Person> persons = personService.findAll();
+    public ResponseEntity<List<PersonDTO>> findAll() {
+        List<PersonDTO> persons = personService.findAll();
         return ResponseEntity.ok(persons);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Person> findById(@PathVariable Long id) {
+    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(personService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Person> save(@RequestBody Person person) {
-        personService.save(person);
-        return new ResponseEntity<>(person, HttpStatus.CREATED);
+    public ResponseEntity<PersonDTO> save(@RequestBody PersonDTO personDTO) {
+        personService.save(personDTO);
+        return new ResponseEntity<>(personDTO, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Person> update(@RequestBody Person person) {
-        return ResponseEntity.ok(personService.update(person));
+    public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO personDTO) {
+        return ResponseEntity.ok(personService.update(personDTO));
     }
 
     @DeleteMapping("/{id}")
