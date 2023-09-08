@@ -1,44 +1,38 @@
 package ir.mostafa.semnani.phonebook.model.repository.impl;
 
 import ir.mostafa.semnani.phonebook.model.entity.Person;
+import ir.mostafa.semnani.phonebook.model.repository.BaseRepository;
 import ir.mostafa.semnani.phonebook.model.repository.PersonRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class PersonRepositoryImpl implements PersonRepository {
-    @PersistenceContext
-    private EntityManager entityManager;
-
+public class PersonRepositoryImpl extends BaseRepository<Person> implements PersonRepository {
     public List<Person> findAll() {
-        TypedQuery<Person> findAllQuery = entityManager.createQuery("SELECT P FROM Person P", Person.class);
-        return findAllQuery.getResultList();
+        return super.findAll("SELECT P FROM Person P", Person.class);
     }
 
     public Person findById(Long id) {
-        return entityManager.find(Person.class, id);
+        return super.findById(Person.class, id);
     }
 
     public void save(Person person) {
-        entityManager.persist(person);
+        super.save(person);
     }
 
     public Person update(Person person) {
         Person personEntity = findById(person.getId());
 
         personEntity.setName(person.getName());
-        entityManager.persist(personEntity);
+        super.save(personEntity);
         return personEntity;
     }
 
     public void delete(Long id) {
         Person personEntity = findById(id);
 
-        entityManager.remove(personEntity);
+        super.delete(personEntity);
     }
 
 }
