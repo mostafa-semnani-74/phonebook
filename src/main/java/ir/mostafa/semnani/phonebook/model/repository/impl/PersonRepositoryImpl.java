@@ -22,17 +22,12 @@ public class PersonRepositoryImpl extends BaseRepository<Person> implements Pers
     }
 
     public Person update(Person person) {
-        Person personEntity = findById(person.getId());
-
-        personEntity.setName(person.getName());
-        super.save(personEntity);
-        return personEntity;
+        super.save(person);
+        return person;
     }
 
-    public void delete(Long id) {
-        Person personEntity = findById(id);
-
-        super.delete(personEntity);
+    public void delete(Person person) {
+        super.delete(person);
     }
 
 }

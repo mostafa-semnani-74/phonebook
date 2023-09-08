@@ -1,5 +1,6 @@
 package ir.mostafa.semnani.phonebook.model.service.impl;
 
+import ir.mostafa.semnani.phonebook.exception.PersonNotFoundException;
 import ir.mostafa.semnani.phonebook.model.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.model.entity.Person;
 import ir.mostafa.semnani.phonebook.model.mapper.PersonMapper;
@@ -30,7 +31,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Transactional(readOnly = true)
     public PersonDTO findById(Long id) {
-        Person person = personRepository.findById(id);
+        Person person = findEntityById(id);
         log.info("person with id : {} found", person.getId());
         return PersonMapper.toDTO(person);
     }
@@ -41,13 +42,24 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public PersonDTO update(PersonDTO personDTO) {
-        PersonDTO savedPersonDTO = PersonMapper.toDTO(personRepository.update(PersonMapper.toEntity(personDTO)));
+        Person person = findEntityById(personDTO.getId());
+        person.setName(personDTO.getName());
+
+        PersonDTO savedPersonDTO = PersonMapper.toDTO(personRepository.update(person));
         log.info("person updated : " + savedPersonDTO);
         return savedPersonDTO;
     }
 
     public void delete(Long id) {
-        personRepository.delete(id);
+        Person person = findEntityById(id);
+        personRepository.delete(person);
         log.info("person with id : {} deleted", id);
+    }
+
+    private Person findEntityById(Long id) {
+        Person person = personRepository.findById(id);
+        if (person == null)
+            throw new PersonNotFoundException("person with id : " + id + " not found");
+        return person;
     }
 }
