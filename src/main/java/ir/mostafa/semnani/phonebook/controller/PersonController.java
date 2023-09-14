@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/persons")
 @AllArgsConstructor
+@CrossOrigin(value = "http://localhost:5173/")
 @Tag(name = "Person", description = "Person APIs")
 public class PersonController {
     @Autowired
