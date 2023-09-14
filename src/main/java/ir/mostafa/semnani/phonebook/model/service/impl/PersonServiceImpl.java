@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @AllArgsConstructor
@@ -45,7 +46,7 @@ public class PersonServiceImpl implements PersonService {
         Person person = findEntityById(personDTO.getId());
         person.setName(personDTO.getName());
 
-        PersonDTO savedPersonDTO = PersonMapper.toDTO(personRepository.update(person));
+        PersonDTO savedPersonDTO = PersonMapper.toDTO(personRepository.save(person));
         log.info("person updated : " + savedPersonDTO);
         return savedPersonDTO;
     }
@@ -57,9 +58,10 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private Person findEntityById(Long id) {
-        Person person = personRepository.findById(id);
-        if (person == null)
+        Optional<Person> person = personRepository.findById(id);
+        if (person.isPresent())
+            return person.get();
+        else
             throw new PersonNotFoundException("person with id : " + id + " not found");
-        return person;
     }
 }
