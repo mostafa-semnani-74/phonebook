@@ -3,23 +3,23 @@ package ir.mostafa.semnani.phonebook.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "tbl_person")
+@Table(name = "tbl_address")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Person {
+public class Address {
     @Id
     @GeneratedValue
     private Long Id;
 
     @Column
-    private String name;
+    private String description;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
-    private List<Address> addressList;
+    @ManyToOne
+    @JoinColumn(name = "person_id", nullable = false)
+    private Person person;
 }

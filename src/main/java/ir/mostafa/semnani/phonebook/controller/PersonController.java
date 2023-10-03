@@ -44,8 +44,8 @@ public class PersonController {
             description = "response is a person")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "response is a person object",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = PersonDTO.class)) })
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PersonDTO.class))})
     })
     @GetMapping("/{id}")
     public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
@@ -55,9 +55,9 @@ public class PersonController {
     @Operation(summary = "save a person",
             description = "response is a saved person")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "response is a saved person object",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = PersonDTO.class)) })
+            @ApiResponse(responseCode = "201", description = "response is a saved person object",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PersonDTO.class))})
     })
     @PostMapping
     public ResponseEntity<PersonDTO> save(@RequestBody PersonDTO personDTO) {
@@ -69,8 +69,8 @@ public class PersonController {
             description = "response is a saved person")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "response is a saved person object",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = PersonDTO.class)) })
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PersonDTO.class))})
     })
     @PutMapping
     public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO personDTO) {

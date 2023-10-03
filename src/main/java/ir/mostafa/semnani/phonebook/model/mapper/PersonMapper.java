@@ -24,6 +24,7 @@ public class PersonMapper {
         return Person.builder()
                 .Id(personDTO.getId())
                 .name(personDTO.getName())
+                .addressList(AddressMapper.toEntities(personDTO.getAddresses()))
                 .build();
     }
 }
