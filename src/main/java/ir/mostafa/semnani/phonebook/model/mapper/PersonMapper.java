@@ -3,6 +3,7 @@ package ir.mostafa.semnani.phonebook.model.mapper;
 import ir.mostafa.semnani.phonebook.model.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.model.entity.Person;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class PersonMapper {
             return Person.builder()
                     .id(personDTO.getId())
                     .name(personDTO.getName())
-                    .addressList(AddressMapper.toEntities(personDTO.getAddresses()))
+                    .addressList(personDTO.getAddresses() != null ? AddressMapper.toEntities(personDTO.getAddresses()) : new ArrayList<>())
                     .build();
         } else
             return new Person();
