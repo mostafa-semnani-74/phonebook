@@ -15,11 +15,11 @@ import java.util.List;
 public class Person {
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person")
     private List<Address> addressList;
 }

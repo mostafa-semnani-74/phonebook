@@ -11,6 +11,7 @@ public class PersonMapper {
         return PersonDTO.builder()
                 .id(person.getId())
                 .name(person.getName())
+                .addresses(AddressMapper.toDTOs(person.getAddressList()))
                 .build();
     }
 
@@ -21,10 +22,13 @@ public class PersonMapper {
     }
 
     public static Person toEntity(PersonDTO personDTO) {
-        return Person.builder()
-                .Id(personDTO.getId())
-                .name(personDTO.getName())
-                .addressList(AddressMapper.toEntities(personDTO.getAddresses()))
-                .build();
+        if (personDTO != null) {
+            return Person.builder()
+                    .id(personDTO.getId())
+                    .name(personDTO.getName())
+                    .addressList(AddressMapper.toEntities(personDTO.getAddresses()))
+                    .build();
+        } else
+            return new Person();
     }
 }

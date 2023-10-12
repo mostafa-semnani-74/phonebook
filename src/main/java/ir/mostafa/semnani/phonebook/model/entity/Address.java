@@ -14,12 +14,12 @@ import javax.persistence.*;
 public class Address {
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
     @Column
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
     private Person person;
 }

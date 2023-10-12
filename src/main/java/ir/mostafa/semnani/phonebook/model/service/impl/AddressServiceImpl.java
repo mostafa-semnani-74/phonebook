@@ -42,6 +42,12 @@ public class AddressServiceImpl implements AddressService {
         log.info("address saved : " + addressDTO);
     }
 
+    @Override
+    public void saveAll(List<AddressDTO> addressDTOS) {
+        addressRepository.saveAll(AddressMapper.toEntities(addressDTOS));
+        log.info("addresses saved : " + addressDTOS);
+    }
+
     public AddressDTO update(AddressDTO addressDTO) {
         Address address = findEntityById(addressDTO.getId());
         address.setDescription(addressDTO.getDescription());

@@ -5,6 +5,7 @@ import ir.mostafa.semnani.phonebook.model.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.model.entity.Person;
 import ir.mostafa.semnani.phonebook.model.mapper.PersonMapper;
 import ir.mostafa.semnani.phonebook.model.repository.PersonRepository;
+import ir.mostafa.semnani.phonebook.model.service.AddressService;
 import ir.mostafa.semnani.phonebook.model.service.PersonNotificationService;
 import ir.mostafa.semnani.phonebook.model.service.PersonService;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,8 @@ public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
     @Autowired
     private final PersonNotificationService notificationService;
+    @Autowired
+    private final AddressService addressService;
 
     @Transactional(readOnly = true)
     public List<PersonDTO> findAll() {
@@ -41,7 +44,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public void save(PersonDTO personDTO) {
-        personRepository.save(PersonMapper.toEntity(personDTO));
+        Person savedPerson = personRepository.save(PersonMapper.toEntity(personDTO));
+        if (personDTO.getAddresses() != null && !personDTO.getAddresses().isEmpty()) {
+            personDTO.getAddresses().forEach(addressDTO -> addressDTO.setPersonDTO(PersonMapper.toDTO(savedPerson)));
+            addressService.saveAll(personDTO.getAddresses());
+        }
+
         log.info("person saved : " + personDTO);
         notificationService.publishSavePersonEvent(personDTO.getName() + " saved");
     }

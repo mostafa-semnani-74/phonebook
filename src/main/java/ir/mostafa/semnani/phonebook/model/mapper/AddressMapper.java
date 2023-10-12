@@ -22,8 +22,9 @@ public class AddressMapper {
 
     public static Address toEntity(AddressDTO addressDTO) {
         return Address.builder()
-                .Id(addressDTO.getId())
+                .id(addressDTO.getId())
                 .description(addressDTO.getDescription())
+                .person(PersonMapper.toEntity(addressDTO.getPersonDTO()))
                 .build();
     }
 

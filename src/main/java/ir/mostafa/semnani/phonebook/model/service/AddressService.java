@@ -5,14 +5,16 @@ import ir.mostafa.semnani.phonebook.model.dto.AddressDTO;
 import java.util.List;
 
 public interface AddressService {
-    public List<AddressDTO> findAll();
+    List<AddressDTO> findAll();
 
-    public AddressDTO findById(Long id);
+    AddressDTO findById(Long id);
 
-    public void save(AddressDTO addressDTO);
+    void save(AddressDTO addressDTO);
 
-    public AddressDTO update(AddressDTO addressDTO);
+    void saveAll(List<AddressDTO> addressDTOS);
 
-    public void delete(Long id);
+    AddressDTO update(AddressDTO addressDTO);
+
+    void delete(Long id);
 
 }
