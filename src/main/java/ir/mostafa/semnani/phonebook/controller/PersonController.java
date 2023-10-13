@@ -65,6 +65,19 @@ public class PersonController {
         return new ResponseEntity<>(personDTO, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "save a person concurrently",
+            description = "response is a saved person")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "response is a saved person object",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PersonDTO.class))})
+    })
+    @PostMapping("/concurrent")
+    public ResponseEntity<PersonDTO> saveConcurrently(@RequestBody PersonDTO personDTO) {
+        personService.saveConcurrently(personDTO);
+        return new ResponseEntity<>(personDTO, HttpStatus.CREATED);
+    }
+
     @Operation(summary = "update a person",
             description = "response is a saved person")
     @ApiResponses(value = {

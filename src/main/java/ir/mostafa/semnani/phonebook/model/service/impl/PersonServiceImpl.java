@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Transactional
 @AllArgsConstructor
@@ -28,6 +31,8 @@ public class PersonServiceImpl implements PersonService {
     private final PersonNotificationService notificationService;
     @Autowired
     private final AddressService addressService;
+
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     @Transactional(readOnly = true)
     public List<PersonDTO> findAll() {
@@ -52,6 +57,18 @@ public class PersonServiceImpl implements PersonService {
 
         log.info("person saved : " + personDTO);
         notificationService.publishSavePersonEvent(personDTO.getName() + " saved");
+    }
+
+    public void saveConcurrently(PersonDTO personDTO) {
+        try {
+            CompletableFuture.runAsync(() -> {
+                        log.info("thread : name : " + Thread.currentThread().getName() + " ,id : " + Thread.currentThread().getId() + " is running");
+                        save(personDTO);
+                        log.info("person saved concurrently with name : {}", personDTO.getName());
+                    }, executorService);
+        } catch (Exception e) {
+            log.error("Error in save person Concurrently with name : " + personDTO.getName(), e);
+        }
     }
 
     public PersonDTO update(PersonDTO personDTO) {

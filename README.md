@@ -1,5 +1,6 @@
 # phonebook
-Monolithic Spring boot project 
+Monolithic Spring boot project \
+simple project for showing my coding style
 
 ## technologies
 Java 11 \
@@ -9,6 +10,7 @@ Rest Api \
 Integration Test \
 Apache Kafka
 PostgreSQL \
+multithreading \
 dockerized \
 Slf4j \
 Lombok

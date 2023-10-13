@@ -11,6 +11,8 @@ public interface PersonService {
 
     void save(PersonDTO personDTO);
 
+    void saveConcurrently(PersonDTO personDTO);
+
     PersonDTO update(PersonDTO personDTO);
 
     void delete(Long id);
