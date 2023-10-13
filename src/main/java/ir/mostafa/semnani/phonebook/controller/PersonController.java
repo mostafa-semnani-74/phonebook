@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class PersonController {
                             array = @ArraySchema(schema = @Schema(implementation = PersonDTO.class)))})
     })
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<List<PersonDTO>> findAll() {
         List<PersonDTO> persons = personService.findAll();
         return ResponseEntity.ok(persons);
