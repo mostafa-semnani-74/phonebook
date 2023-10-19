@@ -14,4 +14,5 @@ PostgreSQL \
 multithreading \
 dockerized \
 Slf4j \
-Lombok
+Lombok \
+job with @Scheduled
