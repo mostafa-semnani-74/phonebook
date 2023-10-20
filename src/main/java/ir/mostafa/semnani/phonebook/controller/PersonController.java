@@ -36,7 +36,7 @@ public class PersonController {
                             array = @ArraySchema(schema = @Schema(implementation = PersonDTO.class)))})
     })
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('person:read')")
     public ResponseEntity<List<PersonDTO>> findAll() {
         List<PersonDTO> persons = personService.findAll();
         return ResponseEntity.ok(persons);
@@ -50,6 +50,7 @@ public class PersonController {
                             schema = @Schema(implementation = PersonDTO.class))})
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('person:read')")
     public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(personService.findById(id));
     }
@@ -62,6 +63,7 @@ public class PersonController {
                             schema = @Schema(implementation = PersonDTO.class))})
     })
     @PostMapping
+    @PreAuthorize("hasAuthority('person:write')")
     public ResponseEntity<PersonDTO> save(@RequestBody PersonDTO personDTO) {
         personService.save(personDTO);
         return new ResponseEntity<>(personDTO, HttpStatus.CREATED);
@@ -75,6 +77,7 @@ public class PersonController {
                             schema = @Schema(implementation = PersonDTO.class))})
     })
     @PostMapping("/concurrent")
+    @PreAuthorize("hasAuthority('person:write')")
     public ResponseEntity<PersonDTO> saveConcurrently(@RequestBody PersonDTO personDTO) {
         personService.saveConcurrently(personDTO);
         return new ResponseEntity<>(personDTO, HttpStatus.CREATED);
@@ -88,6 +91,7 @@ public class PersonController {
                             schema = @Schema(implementation = PersonDTO.class))})
     })
     @PutMapping
+    @PreAuthorize("hasAuthority('person:write')")
     public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO personDTO) {
         return ResponseEntity.ok(personService.update(personDTO));
     }
@@ -98,6 +102,7 @@ public class PersonController {
             @ApiResponse(responseCode = "200", description = "response is an ok 200 http status")
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('person:write')")
     public ResponseEntity delete(@PathVariable Long id) {
         personService.delete(id);
         return ResponseEntity.ok().build();

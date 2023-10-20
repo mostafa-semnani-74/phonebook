@@ -7,10 +7,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static ir.mostafa.semnani.phonebook.security.enums.AppUserPermission.PERSON_READ;
+
 @RequiredArgsConstructor
 public enum AppUserRole {
-    ADMIN(Set.of(AppUserPermission.PERSON_WRITE, AppUserPermission.PERSON_READ)),
-    PERSON(Set.of(AppUserPermission.PERSON_READ));
+    ADMIN(Set.of(AppUserPermission.PERSON_WRITE, PERSON_READ)),
+    PERSON(Set.of(PERSON_READ));
 
     private final Set<AppUserPermission> permissions;
 

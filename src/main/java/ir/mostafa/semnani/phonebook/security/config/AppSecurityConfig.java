@@ -1,27 +1,28 @@
 package ir.mostafa.semnani.phonebook.security.config;
 
+import ir.mostafa.semnani.phonebook.security.model.AppUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import static ir.mostafa.semnani.phonebook.security.enums.AppUserRole.ADMIN;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
+    private final AppUserDetailsService appUserDetailsService;
 
-    public AppSecurityConfig(PasswordEncoder passwordEncoder) {
+    @Autowired
+    public AppSecurityConfig(PasswordEncoder passwordEncoder, AppUserDetailsService appUserDetailsService) {
         this.passwordEncoder = passwordEncoder;
+        this.appUserDetailsService = appUserDetailsService;
     }
 
     @Override
@@ -35,14 +36,16 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
-    @Bean
-    protected UserDetailsService userDetailService() {
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("123"))
-                .authorities(ADMIN.getGrantedAuthority())
-                .build();
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+       auth.authenticationProvider(daoAuthenticationProvider());
+    }
 
-        return new InMemoryUserDetailsManager(admin);
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsService(appUserDetailsService);
+        return provider;
     }
 }
