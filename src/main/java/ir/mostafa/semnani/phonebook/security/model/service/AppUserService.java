@@ -1,7 +1,6 @@
 package ir.mostafa.semnani.phonebook.security.model.service;
 
 import ir.mostafa.semnani.phonebook.security.model.dto.AppUserDTO;
-import ir.mostafa.semnani.phonebook.security.model.entity.AppRole;
 import ir.mostafa.semnani.phonebook.security.model.entity.AppUser;
 import ir.mostafa.semnani.phonebook.security.model.mapper.AppUserMapper;
 import ir.mostafa.semnani.phonebook.security.model.repository.AppUserRepository;

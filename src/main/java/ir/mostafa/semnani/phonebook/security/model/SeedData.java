@@ -25,14 +25,24 @@ public class SeedData implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        AppUserDTO appUserDTO = new AppUserDTO();
-        appUserDTO.setUsername("admin");
-        appUserDTO.setPassword(passwordEncoder.encode("123"));
+        AppUserDTO admin = new AppUserDTO();
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("123"));
 
-        AppRole appRole = new AppRole();
-        appRole.setName("ROLE_" + AppUserRole.ADMIN.name());
-        appUserDTO.setRoles(Set.of(appRole));
+        AppRole adminAppRole = new AppRole();
+        adminAppRole.setName("ROLE_" + AppUserRole.ADMIN.name());
+        admin.setRoles(Set.of(adminAppRole));
 
-        appUserService.save(appUserDTO);
+        appUserService.save(admin);
+
+        AppUserDTO user = new AppUserDTO();
+        user.setUsername("user");
+        user.setPassword(passwordEncoder.encode("123"));
+
+        AppRole userAppRole = new AppRole();
+        userAppRole.setName("ROLE_" + AppUserRole.PERSON.name());
+        user.setRoles(Set.of(userAppRole));
+
+        appUserService.save(user);
     }
 }

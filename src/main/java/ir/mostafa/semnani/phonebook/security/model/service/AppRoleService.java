@@ -26,6 +26,12 @@ public class AppRoleService {
         return appRoles;
     }
 
+    @Transactional(readOnly = true)
+    public List<AppRole> findByUserId(Long userId) {
+        List<AppRole> appRoles = appRoleRepository.findByUserId(userId);
+        return appRoles;
+    }
+
     public AppRole save(AppRole appRole) {
         AppRole savedAppRole = appRoleRepository.save(appRole);
         return appRole;
