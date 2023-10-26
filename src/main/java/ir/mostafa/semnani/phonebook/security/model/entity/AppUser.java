@@ -26,5 +26,5 @@ public class AppUser {
 
     @ManyToMany(mappedBy = "users")
     @JsonIgnore
-    Set<AppRole> roles;
+    private Set<AppRole> roles;
 }

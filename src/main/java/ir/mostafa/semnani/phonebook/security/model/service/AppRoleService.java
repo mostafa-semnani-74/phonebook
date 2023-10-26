@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -24,6 +25,15 @@ public class AppRoleService {
     public List<AppRole> findAll() {
         List<AppRole> appRoles = appRoleRepository.findAll();
         return appRoles;
+    }
+
+    @Transactional(readOnly = true)
+    public AppRole findById(Long id) {
+        Optional<AppRole> appRole = appRoleRepository.findById(id);
+        if (appRole.isPresent())
+            return appRole.get();
+        else
+            throw new RuntimeException("app role not found with id : " + id);
     }
 
     @Transactional(readOnly = true)

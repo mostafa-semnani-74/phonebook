@@ -7,13 +7,13 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "tbl_app_role")
+@Table(name = "tbl_app_permission")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class AppRole {
+public class AppPermission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,13 +23,9 @@ public class AppRole {
 
     @ManyToMany
     @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "app_role_id"),
-            inverseJoinColumns = @JoinColumn(name = "app_user_id"))
+            name = "roles_permissions",
+            joinColumns = @JoinColumn(name = "app_permission_id"),
+            inverseJoinColumns = @JoinColumn(name = "app_role_id"))
     @JsonIgnore
-    private Set<AppUser> users;
-
-    @ManyToMany(mappedBy = "appRoles")
-    @JsonIgnore
-    private Set<AppPermission> permissions;
+    private Set<AppRole> appRoles;
 }
