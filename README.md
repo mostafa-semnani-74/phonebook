@@ -6,7 +6,7 @@ simple project for showing my coding style
 Java 11 \
 Spring Boot 2 \
 Spring Data JPA \
-Spring Security \
+Spring Security with role and permissions and jwt \
 Rest Api \
 Integration Test \
 Apache Kafka
