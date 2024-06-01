@@ -33,6 +33,7 @@ public class AppSecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/actuator/prometheus").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
