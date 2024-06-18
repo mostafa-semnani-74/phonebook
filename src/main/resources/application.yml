@@ -7,3 +7,7 @@ management:
       exposure:
         include:
           - prometheus
+
+grpc:
+  server:
+    port: 8082

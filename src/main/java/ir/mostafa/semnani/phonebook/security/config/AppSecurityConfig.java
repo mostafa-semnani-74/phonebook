@@ -3,6 +3,8 @@ package ir.mostafa.semnani.phonebook.security.config;
 import ir.mostafa.semnani.phonebook.security.filter.JwtAuthenticationFilter;
 import ir.mostafa.semnani.phonebook.security.model.AppUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.server.security.authentication.BasicGrpcAuthenticationReader;
+import net.devh.boot.grpc.server.security.authentication.GrpcAuthenticationReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -57,4 +59,10 @@ public class AppSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+    @Bean
+    public GrpcAuthenticationReader grpcAuthenticationReader() {
+        return new BasicGrpcAuthenticationReader();
+    }
+
 }

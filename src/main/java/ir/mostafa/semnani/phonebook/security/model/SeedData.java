@@ -70,5 +70,9 @@ public class SeedData implements CommandLineRunner {
 
         appPermissionService.save(personRead, userAppRole.getId());
 
+        AppPermission personWrite = new AppPermission();
+        personWrite.setName(AppUserPermission.PERSON_WRITE.getPermission());
+        appPermissionService.save(personWrite, adminAppRole.getId());
+        appPermissionService.save(personRead, adminAppRole.getId());
     }
 }
