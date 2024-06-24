@@ -1,5 +1,6 @@
 package ir.mostafa.semnani.phonebook.model.entity;
 
+import ir.mostafa.semnani.phonebook.model.entity.base.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class Person {
+public class Person extends BaseEntity {
     @Id
     @GeneratedValue
     private Long id;
