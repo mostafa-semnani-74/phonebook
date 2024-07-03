@@ -4,7 +4,7 @@ import grpc.proto.Empty;
 import grpc.proto.Person;
 import grpc.proto.PersonServiceGrpc;
 import io.grpc.stub.StreamObserver;
-import ir.mostafa.semnani.phonebook.model.repository.PersonRepository;
+import ir.mostafa.semnani.phonebook.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 

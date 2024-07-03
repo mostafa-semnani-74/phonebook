@@ -1,6 +1,6 @@
-package ir.mostafa.semnani.phonebook.model.entity;
+package ir.mostafa.semnani.phonebook.entity;
 
-import ir.mostafa.semnani.phonebook.model.entity.base.BaseEntity;
+import ir.mostafa.semnani.phonebook.entity.base.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

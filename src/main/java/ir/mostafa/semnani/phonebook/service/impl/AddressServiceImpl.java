@@ -1,11 +1,11 @@
-package ir.mostafa.semnani.phonebook.model.service.impl;
+package ir.mostafa.semnani.phonebook.service.impl;
 
 import ir.mostafa.semnani.phonebook.exception.AddressNotFoundException;
-import ir.mostafa.semnani.phonebook.model.dto.AddressDTO;
-import ir.mostafa.semnani.phonebook.model.entity.Address;
-import ir.mostafa.semnani.phonebook.model.mapper.AddressMapper;
-import ir.mostafa.semnani.phonebook.model.repository.AddressRepository;
-import ir.mostafa.semnani.phonebook.model.service.AddressService;
+import ir.mostafa.semnani.phonebook.dto.AddressDTO;
+import ir.mostafa.semnani.phonebook.entity.Address;
+import ir.mostafa.semnani.phonebook.mapper.AddressMapper;
+import ir.mostafa.semnani.phonebook.repository.AddressRepository;
+import ir.mostafa.semnani.phonebook.service.AddressService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

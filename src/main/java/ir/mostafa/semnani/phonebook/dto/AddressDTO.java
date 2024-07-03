@@ -1,4 +1,4 @@
-package ir.mostafa.semnani.phonebook.model.dto;
+package ir.mostafa.semnani.phonebook.dto;
 
 import lombok.Builder;
 import lombok.Data;

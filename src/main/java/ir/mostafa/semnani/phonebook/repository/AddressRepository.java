@@ -1,6 +1,6 @@
-package ir.mostafa.semnani.phonebook.model.repository;
+package ir.mostafa.semnani.phonebook.repository;
 
-import ir.mostafa.semnani.phonebook.model.entity.Address;
+import ir.mostafa.semnani.phonebook.entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

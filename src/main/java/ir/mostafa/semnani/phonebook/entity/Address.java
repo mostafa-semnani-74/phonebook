@@ -1,4 +1,4 @@
-package ir.mostafa.semnani.phonebook.model.entity;
+package ir.mostafa.semnani.phonebook.entity;
 
 import lombok.*;
 

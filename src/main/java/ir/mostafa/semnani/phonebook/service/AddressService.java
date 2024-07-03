@@ -1,6 +1,6 @@
-package ir.mostafa.semnani.phonebook.model.service;
+package ir.mostafa.semnani.phonebook.service;
 
-import ir.mostafa.semnani.phonebook.model.dto.AddressDTO;
+import ir.mostafa.semnani.phonebook.dto.AddressDTO;
 
 import java.util.List;
 

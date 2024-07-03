@@ -1,4 +1,4 @@
-package ir.mostafa.semnani.phonebook.model.entity.base;
+package ir.mostafa.semnani.phonebook.entity.base;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;

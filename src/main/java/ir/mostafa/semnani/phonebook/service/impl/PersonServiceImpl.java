@@ -1,13 +1,13 @@
-package ir.mostafa.semnani.phonebook.model.service.impl;
+package ir.mostafa.semnani.phonebook.service.impl;
 
 import ir.mostafa.semnani.phonebook.exception.PersonNotFoundException;
-import ir.mostafa.semnani.phonebook.model.dto.PersonDTO;
-import ir.mostafa.semnani.phonebook.model.entity.Person;
-import ir.mostafa.semnani.phonebook.model.mapper.PersonMapper;
-import ir.mostafa.semnani.phonebook.model.repository.PersonRepository;
-import ir.mostafa.semnani.phonebook.model.service.AddressService;
-import ir.mostafa.semnani.phonebook.model.service.PersonNotificationService;
-import ir.mostafa.semnani.phonebook.model.service.PersonService;
+import ir.mostafa.semnani.phonebook.dto.PersonDTO;
+import ir.mostafa.semnani.phonebook.entity.Person;
+import ir.mostafa.semnani.phonebook.mapper.PersonMapper;
+import ir.mostafa.semnani.phonebook.repository.PersonRepository;
+import ir.mostafa.semnani.phonebook.service.AddressService;
+import ir.mostafa.semnani.phonebook.service.PersonNotificationService;
+import ir.mostafa.semnani.phonebook.service.PersonService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

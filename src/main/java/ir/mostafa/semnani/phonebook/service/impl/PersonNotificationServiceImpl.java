@@ -1,6 +1,6 @@
-package ir.mostafa.semnani.phonebook.model.service.impl;
+package ir.mostafa.semnani.phonebook.service.impl;
 
-import ir.mostafa.semnani.phonebook.model.service.PersonNotificationService;
+import ir.mostafa.semnani.phonebook.service.PersonNotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

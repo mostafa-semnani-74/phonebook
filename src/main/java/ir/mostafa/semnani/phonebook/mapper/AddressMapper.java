@@ -1,7 +1,7 @@
-package ir.mostafa.semnani.phonebook.model.mapper;
+package ir.mostafa.semnani.phonebook.mapper;
 
-import ir.mostafa.semnani.phonebook.model.dto.AddressDTO;
-import ir.mostafa.semnani.phonebook.model.entity.Address;
+import ir.mostafa.semnani.phonebook.dto.AddressDTO;
+import ir.mostafa.semnani.phonebook.entity.Address;
 
 import java.util.List;
 import java.util.stream.Collectors;

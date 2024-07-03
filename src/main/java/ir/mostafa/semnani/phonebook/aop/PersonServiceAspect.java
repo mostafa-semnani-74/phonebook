@@ -11,12 +11,12 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class PersonServiceAspect {
-    @Before("execution(* ir.mostafa.semnani.phonebook.model.service.PersonService.save(..))")
+    @Before("execution(* ir.mostafa.semnani.phonebook.service.PersonService.save(..))")
     public void beforeSave(JoinPoint joinPoint) {
         System.out.println("before save join point : " + Arrays.toString(joinPoint.getArgs()));
     }
 
-    @After("execution(* ir.mostafa.semnani.phonebook.model.service.PersonService.save(..))")
+    @After("execution(* ir.mostafa.semnani.phonebook.service.PersonService.save(..))")
     public void afterSave(JoinPoint joinPoint) {
         System.out.println("after save join point : " + Arrays.toString(joinPoint.getArgs()));
     }

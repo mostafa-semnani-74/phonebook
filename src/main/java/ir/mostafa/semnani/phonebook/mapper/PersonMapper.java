@@ -1,7 +1,7 @@
-package ir.mostafa.semnani.phonebook.model.mapper;
+package ir.mostafa.semnani.phonebook.mapper;
 
-import ir.mostafa.semnani.phonebook.model.dto.PersonDTO;
-import ir.mostafa.semnani.phonebook.model.entity.Person;
+import ir.mostafa.semnani.phonebook.dto.PersonDTO;
+import ir.mostafa.semnani.phonebook.entity.Person;
 
 import java.util.ArrayList;
 import java.util.List;
