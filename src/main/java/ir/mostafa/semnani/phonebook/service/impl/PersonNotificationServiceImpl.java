@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class PersonNotificationServiceImpl implements PersonNotificationService {
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void publishSavePersonEvent(String savePersonEventMessage) {
         kafkaTemplate.send("person", savePersonEventMessage);

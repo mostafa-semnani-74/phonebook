@@ -20,7 +20,6 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class AddressServiceImpl implements AddressService {
-    @Autowired
     private final AddressRepository addressRepository;
 
     @Transactional(readOnly = true)

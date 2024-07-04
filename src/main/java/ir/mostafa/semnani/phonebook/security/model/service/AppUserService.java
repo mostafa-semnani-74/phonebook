@@ -4,6 +4,7 @@ import ir.mostafa.semnani.phonebook.security.model.dto.AppUserDTO;
 import ir.mostafa.semnani.phonebook.security.model.entity.AppUser;
 import ir.mostafa.semnani.phonebook.security.model.mapper.AppUserMapper;
 import ir.mostafa.semnani.phonebook.security.model.repository.AppUserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,15 +15,10 @@ import java.util.Set;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final AppRoleService appRoleService;
-
-    @Autowired
-    public AppUserService(AppUserRepository appUserRepository, AppRoleService appRoleService) {
-        this.appUserRepository = appUserRepository;
-        this.appRoleService = appRoleService;
-    }
 
     @Transactional(readOnly = true)
     public List<AppUserDTO> findAll() {

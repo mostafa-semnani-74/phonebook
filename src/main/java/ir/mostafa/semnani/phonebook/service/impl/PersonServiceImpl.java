@@ -25,11 +25,8 @@ import java.util.concurrent.Executors;
 @Service
 @Slf4j
 public class PersonServiceImpl implements PersonService {
-    @Autowired
     private final PersonRepository personRepository;
-    @Autowired
     private final PersonNotificationService notificationService;
-    @Autowired
     private final AddressService addressService;
 
     private static final ExecutorService executorService = Executors.newFixedThreadPool(2);

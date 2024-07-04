@@ -22,7 +22,6 @@ import java.util.List;
 @AllArgsConstructor
 @Tag(name = "Address", description = "Address APIs")
 public class AddressController {
-    @Autowired
     private final AddressService addressService;
 
     @Operation(

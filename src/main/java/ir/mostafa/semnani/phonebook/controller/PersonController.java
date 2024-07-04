@@ -24,7 +24,6 @@ import java.util.List;
 @CrossOrigin(value = "http://localhost:5173/")
 @Tag(name = "Person", description = "Person APIs")
 public class PersonController {
-    @Autowired
     private final PersonService personService;
 
     @Operation(

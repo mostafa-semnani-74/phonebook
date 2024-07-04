@@ -5,6 +5,7 @@ import ir.mostafa.semnani.phonebook.security.model.entity.AppUser;
 import ir.mostafa.semnani.phonebook.security.model.service.AppPermissionService;
 import ir.mostafa.semnani.phonebook.security.model.service.AppRoleService;
 import ir.mostafa.semnani.phonebook.security.model.service.AppUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,17 +19,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
     private final AppUserService appUserService;
     private final AppRoleService appRoleService;
     private final AppPermissionService appPermissionService;
-
-    @Autowired
-    public AppUserDetailsService(AppUserService appUserService, AppRoleService appRoleService, AppPermissionService appPermissionService) {
-        this.appUserService = appUserService;
-        this.appRoleService = appRoleService;
-        this.appPermissionService = appPermissionService;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
