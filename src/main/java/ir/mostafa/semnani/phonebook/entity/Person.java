@@ -3,7 +3,7 @@ package ir.mostafa.semnani.phonebook.entity;
 import ir.mostafa.semnani.phonebook.entity.base.BaseEntity;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity

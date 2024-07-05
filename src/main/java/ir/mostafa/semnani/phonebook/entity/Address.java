@@ -2,7 +2,7 @@ package ir.mostafa.semnani.phonebook.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tbl_address")
