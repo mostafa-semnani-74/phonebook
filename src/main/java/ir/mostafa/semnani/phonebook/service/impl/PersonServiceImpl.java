@@ -1,5 +1,6 @@
 package ir.mostafa.semnani.phonebook.service.impl;
 
+import ir.mostafa.semnani.phonebook.dto.PageDTO;
 import ir.mostafa.semnani.phonebook.exception.PersonNotFoundException;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.entity.Person;
@@ -11,6 +12,7 @@ import ir.mostafa.semnani.phonebook.service.PersonService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 @Transactional
 @AllArgsConstructor
@@ -32,10 +35,18 @@ public class PersonServiceImpl implements PersonService {
     private static final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     @Transactional(readOnly = true)
-    public List<PersonDTO> findAll() {
-        List<Person> personList = personRepository.findAll();
-        log.info("{} persons found", personList.size());
-        return PersonMapper.toDTOs(personList);
+    public Page<PersonDTO> findAll(PageDTO pageDTO) {
+        Pageable pageable = PageRequest.of(pageDTO.pageNumber(), pageDTO.size());
+        Page<Person> personList = personRepository.findAll(pageable);
+
+        log.info("{} persons found", personList.getTotalElements());
+        return new PageImpl<>(
+                personList.stream()
+                        .map(PersonMapper::toDTO)
+                        .collect(Collectors.toList()),
+                pageable,
+                personList.getTotalElements()
+        );
     }
 
     @Transactional(readOnly = true)
@@ -59,10 +70,10 @@ public class PersonServiceImpl implements PersonService {
     public void saveConcurrently(PersonDTO personDTO) {
         try {
             CompletableFuture.runAsync(() -> {
-                        log.info("thread : name : " + Thread.currentThread().getName() + " ,id : " + Thread.currentThread().getId() + " is running");
-                        save(personDTO);
-                        log.info("person saved concurrently with name : {}", personDTO.getName());
-                    }, executorService);
+                log.info("thread : name : " + Thread.currentThread().getName() + " ,id : " + Thread.currentThread().getId() + " is running");
+                save(personDTO);
+                log.info("person saved concurrently with name : {}", personDTO.getName());
+            }, executorService);
         } catch (Exception e) {
             log.error("Error in save person Concurrently with name : " + personDTO.getName(), e);
         }

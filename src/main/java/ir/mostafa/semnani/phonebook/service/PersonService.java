@@ -1,11 +1,13 @@
 package ir.mostafa.semnani.phonebook.service;
 
+import ir.mostafa.semnani.phonebook.dto.PageDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface PersonService {
-    List<PersonDTO> findAll();
+    Page<PersonDTO> findAll(PageDTO pageDTO);
 
     PersonDTO findById(Long id);
 

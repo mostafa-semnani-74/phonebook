@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import ir.mostafa.semnani.phonebook.dto.PageDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.service.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,8 +38,11 @@ public class PersonController {
     })
     @GetMapping
     @PreAuthorize("hasAuthority('person:read')")
-    public ResponseEntity<List<PersonDTO>> findAll() {
-        List<PersonDTO> persons = personService.findAll();
+    public ResponseEntity<Page<PersonDTO>> findAll(@RequestParam(required = false) String size,
+                                                   @RequestParam(required = false) String pageNumber) {
+        PageDTO pageDTO = new PageDTO(Integer.parseInt(size), Integer.parseInt(pageNumber));
+
+        Page<PersonDTO> persons = personService.findAll(pageDTO);
         return ResponseEntity.ok(persons);
     }
 
