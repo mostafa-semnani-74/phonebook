@@ -38,9 +38,9 @@ public class PersonController {
     })
     @GetMapping
     @PreAuthorize("hasAuthority('person:read')")
-    public ResponseEntity<Page<PersonDTO>> findAll(@RequestParam(required = false) String size,
+    public ResponseEntity<Page<PersonDTO>> findAll(@RequestParam(required = false) String pageSize,
                                                    @RequestParam(required = false) String pageNumber) {
-        PageDTO pageDTO = new PageDTO(Integer.parseInt(size), Integer.parseInt(pageNumber));
+        PageDTO pageDTO = new PageDTO(Integer.parseInt(pageSize), Integer.parseInt(pageNumber));
 
         Page<PersonDTO> persons = personService.findAll(pageDTO);
         return ResponseEntity.ok(persons);
