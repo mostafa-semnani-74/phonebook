@@ -21,6 +21,9 @@ public class Person extends BaseEntity {
     @Column
     private String name;
 
+    @Column
+    private Integer age;
+
     @OneToMany(mappedBy = "person")
     private List<Address> addressList;
 }

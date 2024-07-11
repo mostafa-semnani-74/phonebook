@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import ir.mostafa.semnani.phonebook.dto.PageDTO;
+import ir.mostafa.semnani.phonebook.dto.PersonCriteriaDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.service.PersonService;
 import lombok.AllArgsConstructor;
@@ -39,10 +40,17 @@ public class PersonController {
     @GetMapping
     @PreAuthorize("hasAuthority('person:read')")
     public ResponseEntity<Page<PersonDTO>> findAll(@RequestParam(required = false) String pageSize,
-                                                   @RequestParam(required = false) String pageNumber) {
+                                                   @RequestParam(required = false) String pageNumber,
+                                                   @RequestParam(required = false) String isAdult,
+                                                   @RequestParam(required = false) String name) {
         PageDTO pageDTO = new PageDTO(Integer.parseInt(pageSize), Integer.parseInt(pageNumber));
 
-        Page<PersonDTO> persons = personService.findAll(pageDTO);
+        PersonCriteriaDTO personCriteriaDTO = PersonCriteriaDTO.builder()
+                .isAdult(Boolean.parseBoolean(isAdult))
+                .name(name)
+                .build();
+
+        Page<PersonDTO> persons = personService.findAll(pageDTO, personCriteriaDTO);
         return ResponseEntity.ok(persons);
     }
 

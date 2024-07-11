@@ -12,6 +12,7 @@ public class PersonMapper {
         return PersonDTO.builder()
                 .id(person.getId())
                 .name(person.getName())
+                .age(person.getAge())
                 .addresses(AddressMapper.toDTOs(person.getAddressList()))
                 .build();
     }
@@ -27,6 +28,7 @@ public class PersonMapper {
             return Person.builder()
                     .id(personDTO.getId())
                     .name(personDTO.getName())
+                    .age(personDTO.getAge())
                     .addressList(personDTO.getAddresses() != null ? AddressMapper.toEntities(personDTO.getAddresses()) : new ArrayList<>())
                     .build();
         } else

@@ -1,6 +1,10 @@
 package ir.mostafa.semnani.phonebook.service.impl;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import ir.mostafa.semnani.phonebook.dto.PageDTO;
+import ir.mostafa.semnani.phonebook.dto.PersonCriteriaDTO;
+import ir.mostafa.semnani.phonebook.entity.QPerson;
 import ir.mostafa.semnani.phonebook.exception.PersonNotFoundException;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.entity.Person;
@@ -35,9 +39,14 @@ public class PersonServiceImpl implements PersonService {
     private static final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     @Transactional(readOnly = true)
-    public Page<PersonDTO> findAll(PageDTO pageDTO) {
+    public Page<PersonDTO> findAll(PageDTO pageDTO, PersonCriteriaDTO personCriteriaDTO) {
         Pageable pageable = PageRequest.of(pageDTO.pageNumber(), pageDTO.size());
-        Page<Person> personList = personRepository.findAll(pageable);
+
+        QPerson qPerson = QPerson.person;
+        BooleanExpression isAdult = qPerson.age.goe(18);
+        BooleanExpression nameStartWith = qPerson.name.startsWith(personCriteriaDTO.getName());
+
+        Page<Person> personList = personRepository.findAll(isAdult.and(nameStartWith), pageable);
 
         log.info("{} persons found", personList.getTotalElements());
         return new PageImpl<>(
