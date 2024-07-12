@@ -65,15 +65,11 @@ public class PersonServiceImpl implements PersonService {
         return PersonMapper.toDTO(person);
     }
 
-    public void save(PersonDTO personDTO) {
+    public PersonDTO save(PersonDTO personDTO) {
         Person savedPerson = personRepository.save(PersonMapper.toEntity(personDTO));
-        if (personDTO.getAddresses() != null && !personDTO.getAddresses().isEmpty()) {
-            personDTO.getAddresses().forEach(addressDTO -> addressDTO.setPersonDTO(PersonMapper.toDTO(savedPerson)));
-            addressService.saveAll(personDTO.getAddresses());
-        }
-
         log.info("person saved : " + personDTO);
         notificationService.publishSavePersonEvent(personDTO.getName() + " saved");
+        return PersonMapper.toDTO(savedPerson);
     }
 
     public void saveConcurrently(PersonDTO personDTO) {

@@ -12,7 +12,7 @@ public interface PersonService {
 
     PersonDTO findById(Long id);
 
-    void save(PersonDTO personDTO);
+    PersonDTO save(PersonDTO personDTO);
 
     void saveConcurrently(PersonDTO personDTO);
 

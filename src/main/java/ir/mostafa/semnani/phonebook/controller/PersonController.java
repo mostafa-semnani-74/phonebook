@@ -77,8 +77,7 @@ public class PersonController {
     @PostMapping
     @PreAuthorize("hasAuthority('person:write')")
     public ResponseEntity<PersonDTO> save(@RequestBody PersonDTO personDTO) {
-        personService.save(personDTO);
-        return new ResponseEntity<>(personDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(personService.save(personDTO), HttpStatus.CREATED);
     }
 
     @Operation(summary = "save a person concurrently",
