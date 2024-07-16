@@ -9,8 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import ir.mostafa.semnani.phonebook.dto.AddressDTO;
 import ir.mostafa.semnani.phonebook.service.AddressService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/addresses")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Tag(name = "Address", description = "Address APIs")
 public class AddressController {
     private final AddressService addressService;

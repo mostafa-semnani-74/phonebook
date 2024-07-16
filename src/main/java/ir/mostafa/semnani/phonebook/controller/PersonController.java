@@ -11,8 +11,7 @@ import ir.mostafa.semnani.phonebook.dto.PageDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonCriteriaDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.service.PersonService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/persons")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @CrossOrigin(value = "http://localhost:5173/")
 @Tag(name = "Person", description = "Person APIs")
 public class PersonController {

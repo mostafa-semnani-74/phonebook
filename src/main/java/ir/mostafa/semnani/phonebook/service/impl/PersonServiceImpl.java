@@ -13,9 +13,8 @@ import ir.mostafa.semnani.phonebook.repository.PersonRepository;
 import ir.mostafa.semnani.phonebook.service.AddressService;
 import ir.mostafa.semnani.phonebook.service.PersonNotificationService;
 import ir.mostafa.semnani.phonebook.service.PersonService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 @Slf4j
 public class PersonServiceImpl implements PersonService {

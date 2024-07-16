@@ -3,6 +3,7 @@ package ir.mostafa.semnani.phonebook.security.controller;
 import ir.mostafa.semnani.phonebook.security.model.entity.AppRole;
 import ir.mostafa.semnani.phonebook.security.model.repository.AppRoleRepository;
 import ir.mostafa.semnani.phonebook.security.model.service.AppRoleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/app/roles")
+@RequiredArgsConstructor
 public class AppRoleController {
     private final AppRoleService appRoleService;
-
-    @Autowired
-    public AppRoleController(AppRoleService appRoleService) {
-        this.appRoleService = appRoleService;
-    }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -6,9 +6,8 @@ import ir.mostafa.semnani.phonebook.entity.Address;
 import ir.mostafa.semnani.phonebook.mapper.AddressMapper;
 import ir.mostafa.semnani.phonebook.repository.AddressRepository;
 import ir.mostafa.semnani.phonebook.service.AddressService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
