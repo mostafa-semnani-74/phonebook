@@ -35,6 +35,8 @@ public class PersonServiceImpl implements PersonService {
     private final PersonNotificationService notificationService;
     private final AddressService addressService;
 
+    private final PersonMapper personMapper;
+
     private static final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     @Transactional(readOnly = true)
@@ -50,7 +52,7 @@ public class PersonServiceImpl implements PersonService {
         log.info("{} persons found", personList.getTotalElements());
         return new PageImpl<>(
                 personList.stream()
-                        .map(PersonMapper::toDTO)
+                        .map(personMapper::toDTO)
                         .collect(Collectors.toList()),
                 pageable,
                 personList.getTotalElements()
@@ -61,14 +63,14 @@ public class PersonServiceImpl implements PersonService {
     public PersonDTO findById(Long id) {
         Person person = findEntityById(id);
         log.info("person with id : {} found", person.getId());
-        return PersonMapper.toDTO(person);
+        return personMapper.toDTO(person);
     }
 
     public PersonDTO save(PersonDTO personDTO) {
-        Person savedPerson = personRepository.save(PersonMapper.toEntity(personDTO));
+        Person savedPerson = personRepository.save(personMapper.toEntity(personDTO));
         log.info("person saved : " + personDTO);
         notificationService.publishSavePersonEvent(personDTO.getName() + " saved");
-        return PersonMapper.toDTO(savedPerson);
+        return personMapper.toDTO(savedPerson);
     }
 
     public void saveConcurrently(PersonDTO personDTO) {
@@ -87,7 +89,7 @@ public class PersonServiceImpl implements PersonService {
         Person person = findEntityById(personDTO.getId());
         person.setName(personDTO.getName());
 
-        PersonDTO savedPersonDTO = PersonMapper.toDTO(personRepository.save(person));
+        PersonDTO savedPersonDTO = personMapper.toDTO(personRepository.save(person));
         log.info("person updated : " + savedPersonDTO);
         return savedPersonDTO;
     }

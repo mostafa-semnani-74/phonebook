@@ -24,7 +24,6 @@ public class AddressMapper {
         return Address.builder()
                 .id(addressDTO.getId())
                 .description(addressDTO.getDescription())
-                .person(PersonMapper.toEntity(addressDTO.getPersonDTO()))
                 .build();
     }
 
