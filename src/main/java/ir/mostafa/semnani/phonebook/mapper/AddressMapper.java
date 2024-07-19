@@ -2,34 +2,18 @@ package ir.mostafa.semnani.phonebook.mapper;
 
 import ir.mostafa.semnani.phonebook.dto.AddressDTO;
 import ir.mostafa.semnani.phonebook.entity.Address;
+import org.mapstruct.Mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AddressMapper {
-    public static AddressDTO toDTO(Address address) {
-        return AddressDTO.builder()
-                .Id(address.getId())
-                .description(address.getDescription())
-                .build();
-    }
+@Mapper(componentModel = "spring")
+public interface AddressMapper {
+    AddressDTO toDTO(Address address);
 
-    public static List<AddressDTO> toDTOs(List<Address> addressList) {
-        return addressList.stream()
-                .map(AddressMapper::toDTO)
-                .collect(Collectors.toList());
-    }
+    List<AddressDTO> toDTOs(List<Address> addressList);
 
-    public static Address toEntity(AddressDTO addressDTO) {
-        return Address.builder()
-                .id(addressDTO.getId())
-                .description(addressDTO.getDescription())
-                .build();
-    }
+    Address toEntity(AddressDTO addressDTO);
 
-    public static List<Address> toEntities(List<AddressDTO> addressDTOS) {
-        return addressDTOS.stream()
-                .map(AddressMapper::toEntity)
-                .collect(Collectors.toList());
-    }
+    List<Address> toEntities(List<AddressDTO> addressDTOS);
 }

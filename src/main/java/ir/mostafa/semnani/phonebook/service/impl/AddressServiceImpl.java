@@ -21,28 +21,30 @@ import java.util.Optional;
 public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
 
+    private final AddressMapper addressMapper;
+
     @Transactional(readOnly = true)
     public List<AddressDTO> findAll() {
         List<Address> addressList = addressRepository.findAll();
         log.info("{} addresses found", addressList.size());
-        return AddressMapper.toDTOs(addressList);
+        return addressMapper.toDTOs(addressList);
     }
 
     @Transactional(readOnly = true)
     public AddressDTO findById(Long id) {
         Address address = findEntityById(id);
         log.info("address with id : {} found", address.getId());
-        return AddressMapper.toDTO(address);
+        return addressMapper.toDTO(address);
     }
 
     public void save(AddressDTO addressDTO) {
-        addressRepository.save(AddressMapper.toEntity(addressDTO));
+        addressRepository.save(addressMapper.toEntity(addressDTO));
         log.info("address saved : " + addressDTO);
     }
 
     @Override
     public void saveAll(List<AddressDTO> addressDTOS) {
-        addressRepository.saveAll(AddressMapper.toEntities(addressDTOS));
+        addressRepository.saveAll(addressMapper.toEntities(addressDTOS));
         log.info("addresses saved : " + addressDTOS);
     }
 
@@ -50,7 +52,7 @@ public class AddressServiceImpl implements AddressService {
         Address address = findEntityById(addressDTO.getId());
         address.setDescription(addressDTO.getDescription());
 
-        AddressDTO saveAddressDTO = AddressMapper.toDTO(addressRepository.save(address));
+        AddressDTO saveAddressDTO = addressMapper.toDTO(addressRepository.save(address));
         log.info("person updated : " + saveAddressDTO);
         return saveAddressDTO;
     }
