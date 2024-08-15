@@ -1,6 +1,5 @@
 package ir.mostafa.semnani.phonebook.service.impl;
 
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import ir.mostafa.semnani.phonebook.dto.PageDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonCriteriaDTO;
@@ -10,11 +9,12 @@ import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.entity.Person;
 import ir.mostafa.semnani.phonebook.mapper.PersonMapper;
 import ir.mostafa.semnani.phonebook.repository.PersonRepository;
-import ir.mostafa.semnani.phonebook.service.AddressService;
 import ir.mostafa.semnani.phonebook.service.PersonNotificationService;
 import ir.mostafa.semnani.phonebook.service.PersonService;
+import ir.mostafa.semnani.phonebook.util.I18nUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +33,10 @@ import java.util.stream.Collectors;
 public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
     private final PersonNotificationService notificationService;
-    private final AddressService addressService;
 
     private final PersonMapper personMapper;
+
+    private final I18nUtils i18nUtils;
 
     private static final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
@@ -105,6 +106,6 @@ public class PersonServiceImpl implements PersonService {
         if (person.isPresent())
             return person.get();
         else
-            throw new PersonNotFoundException("person with id : " + id + " not found");
+            throw new PersonNotFoundException(String.format(i18nUtils.getMessage("person.not.found.exception"), id));
     }
 }

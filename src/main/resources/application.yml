@@ -11,3 +11,9 @@ management:
 grpc:
   server:
     port: 8082
+
+spring:
+  messages:
+    fallback-to-system-locale: true
+    encoding: UTF-8
+    basename: i18n/messages
