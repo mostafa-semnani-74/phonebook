@@ -1,6 +1,7 @@
 package ir.mostafa.semnani.phonebook.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import ir.mostafa.semnani.phonebook.dto.PageDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonCriteriaDTO;
 import ir.mostafa.semnani.phonebook.entity.QPerson;
@@ -45,10 +46,19 @@ public class PersonServiceImpl implements PersonService {
         Pageable pageable = PageRequest.of(pageDTO.pageNumber(), pageDTO.size());
 
         QPerson qPerson = QPerson.person;
-        BooleanExpression isAdult = qPerson.age.goe(18);
-        BooleanExpression nameStartWith = qPerson.name.startsWith(personCriteriaDTO.getName());
+        BooleanExpression where = Expressions.TRUE.isTrue();
 
-        Page<Person> personList = personRepository.findAll(isAdult.and(nameStartWith), pageable);
+        if (personCriteriaDTO.getIsAdult() != null) {
+            if (personCriteriaDTO.getIsAdult())
+                where = qPerson.age.goe(18);
+            else
+                where = qPerson.age.loe(18);
+        }
+
+        if (personCriteriaDTO.getName() != null)
+            where = where.and(qPerson.name.startsWith(personCriteriaDTO.getName()));
+
+        Page<Person> personList = personRepository.findAll(where, pageable);
 
         log.info("{} persons found", personList.getTotalElements());
         return new PageImpl<>(

@@ -40,12 +40,12 @@ public class PersonController {
     @PreAuthorize("hasAuthority('person:read')")
     public ResponseEntity<Page<PersonDTO>> findAll(@RequestParam(required = false) String pageSize,
                                                    @RequestParam(required = false) String pageNumber,
-                                                   @RequestParam(required = false) String isAdult,
+                                                   @RequestParam(required = false) Boolean isAdult,
                                                    @RequestParam(required = false) String name) {
         PageDTO pageDTO = new PageDTO(Integer.parseInt(pageSize), Integer.parseInt(pageNumber));
 
         PersonCriteriaDTO personCriteriaDTO = PersonCriteriaDTO.builder()
-                .isAdult(Boolean.parseBoolean(isAdult))
+                .isAdult(isAdult)
                 .name(name)
                 .build();
 
