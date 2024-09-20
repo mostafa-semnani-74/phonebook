@@ -84,15 +84,19 @@ public class PersonServiceImpl implements PersonService {
         return personMapper.toDTO(savedPerson);
     }
 
-    public void saveConcurrently(PersonDTO personDTO) {
+    public PersonDTO saveConcurrently(PersonDTO personDTO) {
         try {
-            CompletableFuture.runAsync(() -> {
+            CompletableFuture<PersonDTO> savedPersonCompletableFuture = CompletableFuture.supplyAsync(() -> {
                 log.info("thread : name : " + Thread.currentThread().getName() + " ,id : " + Thread.currentThread().getId() + " is running");
-                save(personDTO);
+                PersonDTO savedPerson = save(personDTO);
                 log.info("person saved concurrently with name : {}", personDTO.getName());
+                return savedPerson;
             }, executorService);
+
+            return savedPersonCompletableFuture.join();
         } catch (Exception e) {
             log.error("Error in save person Concurrently with name : " + personDTO.getName(), e);
+            throw new RuntimeException("error in save person concurrently");
         }
     }
 

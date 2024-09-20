@@ -14,7 +14,7 @@ public interface PersonService {
 
     PersonDTO save(PersonDTO personDTO);
 
-    void saveConcurrently(PersonDTO personDTO);
+    PersonDTO saveConcurrently(PersonDTO personDTO);
 
     PersonDTO update(PersonDTO personDTO);
 

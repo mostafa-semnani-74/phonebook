@@ -11,6 +11,7 @@ import ir.mostafa.semnani.phonebook.dto.PageDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonCriteriaDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.service.PersonService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -88,9 +89,9 @@ public class PersonController {
     })
     @PostMapping("/concurrent")
     @PreAuthorize("hasAuthority('person:write')")
-    public ResponseEntity<PersonDTO> saveConcurrently(@RequestBody PersonDTO personDTO) {
-        personService.saveConcurrently(personDTO);
-        return new ResponseEntity<>(personDTO, HttpStatus.CREATED);
+    public ResponseEntity<PersonDTO> saveConcurrently(@Valid @RequestBody PersonDTO personDTO) {
+        PersonDTO savedPersonDto = personService.saveConcurrently(personDTO);
+        return new ResponseEntity<>(savedPersonDto, HttpStatus.CREATED);
     }
 
     @Operation(summary = "update a person",
