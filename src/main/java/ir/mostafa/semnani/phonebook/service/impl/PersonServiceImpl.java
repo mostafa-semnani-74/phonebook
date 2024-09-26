@@ -89,13 +89,13 @@ public class PersonServiceImpl implements PersonService {
             CompletableFuture<PersonDTO> savedPersonCompletableFuture = CompletableFuture.supplyAsync(() -> {
                 log.info("thread : name : " + Thread.currentThread().getName() + " ,id : " + Thread.currentThread().getId() + " is running");
                 PersonDTO savedPerson = save(personDTO);
-                log.info("person saved concurrently with name : {}", personDTO.getName());
+                log.info("person saved concurrently : {}", savedPerson);
                 return savedPerson;
             }, executorService);
 
-            return savedPersonCompletableFuture.join();
+            return savedPersonCompletableFuture.get();
         } catch (Exception e) {
-            log.error("Error in save person Concurrently with name : " + personDTO.getName(), e);
+            log.error("Error in save person Concurrently : {} : ", personDTO, e);
             throw new RuntimeException("error in save person concurrently");
         }
     }
