@@ -10,17 +10,18 @@ import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.entity.Person;
 import ir.mostafa.semnani.phonebook.mapper.PersonMapper;
 import ir.mostafa.semnani.phonebook.repository.PersonRepository;
+import ir.mostafa.semnani.phonebook.security.model.service.AppUserService;
+import ir.mostafa.semnani.phonebook.security.model.service.JwtService;
 import ir.mostafa.semnani.phonebook.service.PersonNotificationService;
 import ir.mostafa.semnani.phonebook.service.PersonService;
 import ir.mostafa.semnani.phonebook.util.I18nUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
     private final PersonNotificationService notificationService;
+    private final AppUserService appUserService;
 
     private final PersonMapper personMapper;
 
@@ -78,7 +80,10 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public PersonDTO save(PersonDTO personDTO) {
-        Person savedPerson = personRepository.save(personMapper.toEntity(personDTO));
+        Person person = personMapper.toEntity(personDTO);
+        person.setAppUserId(appUserService.getAppUserId());
+
+        Person savedPerson = personRepository.save(person);
         log.info("person saved : " + personDTO);
         notificationService.publishSavePersonEvent(personDTO.getName() + " saved");
         return personMapper.toDTO(savedPerson);

@@ -1,15 +1,18 @@
 package ir.mostafa.semnani.phonebook.security.model.service;
 
+import ir.mostafa.semnani.phonebook.security.model.AppUserDetails;
 import ir.mostafa.semnani.phonebook.security.model.dto.AppUserDTO;
 import ir.mostafa.semnani.phonebook.security.model.entity.AppUser;
 import ir.mostafa.semnani.phonebook.security.model.mapper.AppUserMapper;
 import ir.mostafa.semnani.phonebook.security.model.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -39,6 +42,25 @@ public class AppUserService {
             appRoleService.saveAll(appUserDTO.getRoles());
         }
         return appUserDTO;
+    }
+
+    @Transactional(readOnly = true)
+    public AppUser getAppUserBySecurityContextHolder() {
+        Optional<String> usernameOPT = Optional.ofNullable(
+                ((AppUserDetails) SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getPrincipal()).getUsername());
+
+        if (usernameOPT.isPresent())
+            return findByUsername(usernameOPT.get());
+        else
+           throw new RuntimeException("user not found !");
+    }
+
+    @Transactional(readOnly = true)
+    public Long getAppUserId() {
+        return getAppUserBySecurityContextHolder().getId();
     }
 
 }
