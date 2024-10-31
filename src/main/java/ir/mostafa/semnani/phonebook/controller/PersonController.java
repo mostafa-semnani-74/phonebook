@@ -38,7 +38,7 @@ public class PersonController {
                             array = @ArraySchema(schema = @Schema(implementation = PersonDTO.class)))})
     })
     @GetMapping
-    @PreAuthorize("hasAuthority('person:read')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Page<PersonDTO>> findAll(@RequestParam(required = false) String pageSize,
                                                    @RequestParam(required = false) String pageNumber,
                                                    @RequestParam(required = false) Boolean isAdult,
