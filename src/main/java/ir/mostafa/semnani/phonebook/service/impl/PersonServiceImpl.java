@@ -75,6 +75,11 @@ public class PersonServiceImpl implements PersonService {
     @Transactional(readOnly = true)
     public PersonDTO findById(Long id) {
         Person person = findEntityById(id);
+
+        var appUserId = appUserService.getAppUserId();
+        if (!person.getAppUserId().equals(appUserId))
+            throw new RuntimeException("forbidden");
+
         log.info("person with id : {} found", person.getId());
         return personMapper.toDTO(person);
     }
