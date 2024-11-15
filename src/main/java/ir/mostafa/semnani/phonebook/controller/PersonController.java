@@ -39,8 +39,8 @@ public class PersonController {
     })
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<Page<PersonDTO>> findAll(@RequestParam(required = false) String pageSize,
-                                                   @RequestParam(required = false) String pageNumber,
+    public ResponseEntity<Page<PersonDTO>> findAll(@RequestParam(required = false, defaultValue = "10") String pageSize,
+                                                   @RequestParam(required = false, defaultValue = "0") String pageNumber,
                                                    @RequestParam(required = false) Boolean isAdult,
                                                    @RequestParam(required = false) String name) {
         PageDTO pageDTO = new PageDTO(Integer.parseInt(pageSize), Integer.parseInt(pageNumber));
