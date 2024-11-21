@@ -14,13 +14,18 @@ public class JpaAuditConfig implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.ofNullable(
-                ((AppUserDetails) SecurityContextHolder
-                        .getContext()
-                        .getAuthentication()
-                        .getPrincipal()
-                )
-                        .getUsername());
+        if (SecurityContextHolder
+                .getContext()
+                .getAuthentication() != null) {
+            return Optional.ofNullable(
+                    ((AppUserDetails) SecurityContextHolder
+                            .getContext()
+                            .getAuthentication()
+                            .getPrincipal()
+                    )
+                            .getUsername());
+        } else
+            return Optional.of("");
     }
 
 }

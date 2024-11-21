@@ -1,6 +1,8 @@
 package ir.mostafa.semnani.phonebook.integrationtest;
 
+import ir.mostafa.semnani.phonebook.entity.Person;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
+import ir.mostafa.semnani.phonebook.repository.PersonRepository;
 import ir.mostafa.semnani.phonebook.security.model.dto.AuthenticationRequest;
 import ir.mostafa.semnani.phonebook.security.model.dto.AuthenticationResponse;
 import org.junit.jupiter.api.*;
@@ -8,13 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -27,6 +30,9 @@ public class PersonIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     @Test
     @Order(1)
@@ -61,6 +67,33 @@ public class PersonIntegrationTest {
 //        Page<PersonDTO> personsDTOList = (Page<PersonDTO>) persons.getBody();
 //        assertEquals(1, personsDTOList.getTotalElements());
 //        assertEquals("mosi", personsDTOList.iterator().next().getName());
+    }
+
+    @Test
+    @Order(3)
+    public void savePersonConcurrentlyOPTLockFailTest() {
+        Person p = personRepository.save(
+                Person.builder()
+                        .age(20)
+                        .name("mosi")
+                        .appUserId(1L)
+                        .build()
+        );
+
+        var entity1 = personRepository.findById(p.getId()).get();
+        var entity2 = personRepository.findById(p.getId()).get();
+
+        entity1.setName("n1");
+        personRepository.save(entity1);
+
+        assertThrows(OptimisticLockingFailureException.class, () -> {
+            entity2.setName("n2");
+            personRepository.save(entity2);
+        });
+
+        var updatedEntity = personRepository.findById(p.getId()).get();
+        assertEquals(1, (int) updatedEntity.getVersion());
+        assertEquals("n1", updatedEntity.getName());
     }
 
     private String getTokenAsAdmin() {
