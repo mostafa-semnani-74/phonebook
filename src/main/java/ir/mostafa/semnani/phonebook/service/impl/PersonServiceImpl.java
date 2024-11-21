@@ -5,20 +5,19 @@ import com.querydsl.core.types.dsl.Expressions;
 import ir.mostafa.semnani.phonebook.dto.PageDTO;
 import ir.mostafa.semnani.phonebook.dto.PersonCriteriaDTO;
 import ir.mostafa.semnani.phonebook.entity.QPerson;
+import ir.mostafa.semnani.phonebook.exception.PersonAlreadyExistsException;
 import ir.mostafa.semnani.phonebook.exception.PersonNotFoundException;
 import ir.mostafa.semnani.phonebook.dto.PersonDTO;
 import ir.mostafa.semnani.phonebook.entity.Person;
 import ir.mostafa.semnani.phonebook.mapper.PersonMapper;
 import ir.mostafa.semnani.phonebook.repository.PersonRepository;
 import ir.mostafa.semnani.phonebook.security.model.service.AppUserService;
-import ir.mostafa.semnani.phonebook.security.model.service.JwtService;
 import ir.mostafa.semnani.phonebook.service.PersonNotificationService;
 import ir.mostafa.semnani.phonebook.service.PersonService;
 import ir.mostafa.semnani.phonebook.util.I18nUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +40,7 @@ public class PersonServiceImpl implements PersonService {
 
     private final I18nUtils i18nUtils;
 
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(2);
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(8);
 
     @Transactional(readOnly = true)
     public Page<PersonDTO> findAll(PageDTO pageDTO, PersonCriteriaDTO personCriteriaDTO) {
@@ -85,8 +84,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public PersonDTO save(PersonDTO personDTO) {
+        var appUserId = appUserService.getAppUserId();
+        checkPersonAlreadyExists(appUserId);
+
         Person person = personMapper.toEntity(personDTO);
-        person.setAppUserId(appUserService.getAppUserId());
+        person.setAppUserId(appUserId);
 
         Person savedPerson = personRepository.save(person);
         log.info("person saved : " + personDTO);
@@ -132,4 +134,11 @@ public class PersonServiceImpl implements PersonService {
         else
             throw new PersonNotFoundException(String.format(i18nUtils.getMessage("person.not.found.exception"), id));
     }
+
+    private void checkPersonAlreadyExists(Long appUserId) {
+        Optional<Person> person = personRepository.findByAppUserId(appUserId);
+        if (person.isPresent())
+            throw new PersonAlreadyExistsException(String.format(i18nUtils.getMessage("person.already.exists.exception"), appUserId));
+    }
+
 }

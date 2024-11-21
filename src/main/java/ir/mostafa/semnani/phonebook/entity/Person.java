@@ -24,6 +24,7 @@ public class Person extends BaseEntity {
     @Column
     private Integer age;
 
+    @Column(unique = true)
     private Long appUserId;
 
     @OneToMany(mappedBy = "person")
