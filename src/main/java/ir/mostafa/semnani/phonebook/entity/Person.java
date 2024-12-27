@@ -4,6 +4,9 @@ import ir.mostafa.semnani.phonebook.entity.base.BaseEntity;
 import lombok.*;
 
 import jakarta.persistence.*;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
 import java.util.List;
 
 @Entity
@@ -13,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@Audited
 public class Person extends BaseEntity {
     @Id
     @GeneratedValue
@@ -31,5 +35,6 @@ public class Person extends BaseEntity {
     private Integer version;
 
     @OneToMany(mappedBy = "person")
+    @NotAudited
     private List<Address> addressList;
 }

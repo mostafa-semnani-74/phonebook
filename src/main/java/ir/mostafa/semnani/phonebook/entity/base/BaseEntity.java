@@ -1,5 +1,6 @@
 package ir.mostafa.semnani.phonebook.entity.base;
 
+import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@Audited
 public class BaseEntity {
 
     @Column(name = "created_by")
