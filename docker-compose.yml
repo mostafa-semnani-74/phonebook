@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'phonebook:latest'
+    build:
+      context: .
+    container_name: phonebook-app
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+
+    ports:
+      - "8081:8081"
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=postgres
+    ports:
+      - "5433:5433"

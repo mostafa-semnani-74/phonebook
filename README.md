@@ -3,7 +3,7 @@ Monolithic Spring boot project \
 simple project for showing my coding style
 
 ## technologies
-Java 17 \
+Java 21 \
 Spring Boot 3 \
 Spring Data JPA \
 Spring Security with role and permissions and jwt \
@@ -12,7 +12,9 @@ Integration Test \
 Apache Kafka
 PostgreSQL \
 multithreading \
-dockerized \
 Slf4j \
 Lombok \
-job with @Scheduled
+job with @Scheduled \
+docker \
+docker compose \
+jenkins
