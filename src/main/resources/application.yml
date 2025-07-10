@@ -13,7 +13,24 @@ grpc:
     port: 8082
 
 spring:
+
   messages:
     fallback-to-system-locale: true
     encoding: UTF-8
     basename: i18n/messages
+
+  datasource:
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 10
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    enabled: false
